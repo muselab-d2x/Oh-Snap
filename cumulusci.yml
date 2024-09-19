@@ -1,0 +1,38 @@
+minimum_cumulusci_version: '3.76.0'
+project:
+    name: Oh-Snap
+    package:
+        name: Oh Snap
+        namespace: d2x
+        api_version: '58.0'
+    git:
+        default_branch: 'main'
+    source_format: sfdx
+    dependencies:
+      
+        - github: "https://github.com/SalesforceFoundation/NPSP"
+      
+
+tasks:
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
+    github_pull_request_snapshot:
+        options:
+            project_code: OH
+            snapshot_pr: True
+            snapshot_failure: True
+    
+
+orgs:
+    scratch:
+        beta:
+            config_file: orgs/managed.json
+        dev:
+            config_file: orgs/unmanaged.json
+        feature:
+            config_file: orgs/managed.json
+        qa:
+            config_file: orgs/managed.json
+        release:
+            config_file: orgs/managed.json
