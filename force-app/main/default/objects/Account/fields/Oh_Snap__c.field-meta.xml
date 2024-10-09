@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oh_Snap__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>For those really important Accounts you need a special checkbox to flag!</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check for really, really special Accounts Only!</inlineHelpText>
+    <label>Oh Snap!</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

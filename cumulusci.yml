@@ -1,28 +1,89 @@
-minimum_cumulusci_version: '3.76.0'
+minimum_cumulusci_version: "3.76.0"
 project:
     name: Oh-Snap
     package:
         name: Oh Snap
         namespace: d2x
-        api_version: '58.0'
+        api_version: "58.0"
     git:
-        default_branch: 'main'
+        default_branch: "main"
     source_format: sfdx
     dependencies:
-      
         - github: "https://github.com/SalesforceFoundation/NPSP"
-      
 
 tasks:
-    run_tests:
+    add_page_layout_fields:
         options:
-            required_org_code_coverage_percent: 75
+            api_names:
+                - Account-Account Layout
+                - Account-Account (Marketing) Layout
+                - Account-Account (Sales) Layout
+                - Account-Account (Support) Layout
+            fields:
+                - api_name: "%%%NAMESPACE%%%Oh_Snap__c"
+                  position:
+                      - relative: after
+                        field: Name
+                      - relative: bottom
+                        section: 0
+
+    create_dependencies_snapshot:
+        options:
+            create_commit_status: True
+            create_environment: True
+
     github_pull_request_snapshot:
         options:
             project_code: OH
             snapshot_pr: True
             snapshot_failure: True
-    
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
+
+flows:
+    config_common_unmanaged:
+        group: Oh Snap! Setup
+        description: Common configuration steps for Oh Snap! in unmanaged dev environments
+        steps:
+            1:
+                task: add_page_layout_fields
+
+    config_common:
+        group: Oh Snap! Setup
+        description: Common configuration steps for Oh Snap! in managed environments
+        steps:
+            1:
+                flow: config_common_unmanaged
+                options:
+                    add_page_layout_fields:
+                        managed: True
+
+    # Add common flows to CumulusCI's universal Org Setup flows
+    config_apextest:
+        steps:
+            3:
+                # Feature testing in GitHub Actions is done on 2GP package versions
+                flow: config_common
+    config_dev:
+        steps:
+            3:
+                flow: config_common_unmanaged
+    config_managed:
+        steps:
+            3:
+                flow: config_common
+    config_qa:
+        steps:
+            3:
+                # QA is done using the qa_org_2gp flow using 2GP package versions
+                flow: config_common
+    config_regression:
+        steps:
+            3:
+                # Regression is done using the regression_org flow using releasable packaged versions
+                flow: config_common
 
 orgs:
     scratch:
@@ -30,6 +91,7 @@ orgs:
             config_file: orgs/managed.json
         dev:
             config_file: orgs/unmanaged.json
+            track_history: True
         feature:
             config_file: orgs/managed.json
         qa:
