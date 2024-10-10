@@ -7,15 +7,9 @@ on:
             - feature/**
             - main
 jobs:
-    prepare:
-        uses: muselab-d2x/d2x/.github/workflows/prepare.yml@cumulusci-next-snapshots
-        with:
-            use_browser: false
-            debug: false
-            
+           
     feature-test:
         name: "Feature Test"
-        needs: prepare
         uses: muselab-d2x/d2x/.github/workflows/feature-test.yml@cumulusci-next-snapshots
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
