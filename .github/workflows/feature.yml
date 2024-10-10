@@ -6,8 +6,7 @@ on:
         branches:
             - feature/**
             - main
-jobs:
-           
+jobs:     
     feature-test:
         name: "Feature Test"
         uses: muselab-d2x/d2x/.github/workflows/feature-test-snapshot.yml@cumulusci-next-snapshots
