@@ -10,12 +10,6 @@ jobs:
     feature-test:
         name: "Feature Test"
         uses: muselab-d2x/d2x/.github/workflows/feature-test.yml@cumulusci-next-snapshots
-        with:
-            create_pr_snapshot: true
-            create_failure_snapshot: true
-            create_commit_status: true
-            create_envionment: true
-
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
             gh-email: "${{ secrets.GH_EMAIL }}"
