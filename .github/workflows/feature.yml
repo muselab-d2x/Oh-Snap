@@ -15,8 +15,8 @@ jobs:
             
     feature-test:
         name: "Feature Test"
+        needs: prepare
         uses: muselab-d2x/d2x/.github/workflows/feature-test.yml@cumulusci-next-snapshots
-        
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
             gh-email: "${{ secrets.GH_EMAIL }}"
