@@ -1,0 +1,22 @@
+name: >
+    Snapshot the dependencies flow results
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - feature/initial-schema
+            - main
+
+jobs:
+    feature-test:
+        name: "Feature Test"
+        uses: muselab-d2x/d2x/.github/workflows/snapshot-flow.yml@cumulusci-next-snapshots
+        secrets:
+            dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
+            gh-email: "${{ secrets.GH_EMAIL }}"
+            github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
+        with:
+            org_name: feature
+            flow_name: dependencies
+            create_snapshot_commit_status: true
+            create_snapshot_environment: true
