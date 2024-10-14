@@ -34,9 +34,8 @@ tasks:
 
     github_pull_request_snapshot:
         options:
-            project_code: OH
             snapshot_pr: True
-            snapshot_failure: True
+            snapshot_fail_pr: True
 
     run_tests:
         options:
