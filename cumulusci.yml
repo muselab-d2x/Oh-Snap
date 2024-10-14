@@ -74,16 +74,22 @@ flows:
         steps:
             3:
                 flow: config_common
+
     config_qa:
         steps:
             3:
-                # QA is done using the qa_org_2gp flow using 2GP package versions
-                flow: config_common
+                flow: config_common_unmanaged
+
     config_regression:
         steps:
             3:
                 # Regression is done using the regression_org flow using releasable packaged versions
                 flow: config_common
+
+    ci_feature:
+        steps:
+            3: 
+                flow: config_common_unmanaged
 
 orgs:
     scratch:
