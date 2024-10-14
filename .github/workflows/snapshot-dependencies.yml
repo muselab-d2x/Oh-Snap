@@ -8,8 +8,8 @@ on:
             - main
 
 jobs:
-    feature-test:
-        name: "Feature Test"
+    snapshot-dependencies:
+        name: "Snapshot dependencies"
         uses: muselab-d2x/d2x/.github/workflows/snapshot-flow.yml@cumulusci-next-snapshots
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
