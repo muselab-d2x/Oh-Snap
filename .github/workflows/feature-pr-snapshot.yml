@@ -15,4 +15,7 @@ jobs:
             gh-email: "${{ secrets.GH_EMAIL }}"
             github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
         with:
-            create_pr_snapshot: false
+            create_pr_snapshot: true
+            create_failure_snapshot: true
+            create_snapshot_commit_status: true
+            create_snapshot_environment: true
