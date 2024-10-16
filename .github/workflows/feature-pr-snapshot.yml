@@ -18,4 +18,3 @@ jobs:
             create_pr_snapshot: true
             create_failure_snapshot: true
             create_snapshot_commit_status: true
-            create_snapshot_environment: true

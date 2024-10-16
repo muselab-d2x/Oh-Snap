@@ -94,12 +94,16 @@ orgs:
     scratch:
         beta:
             config_file: orgs/managed.json
+            namespaced: False
         dev:
             config_file: orgs/unmanaged.json
-            track_history: True
+            namespaced: False
         feature:
             config_file: orgs/managed.json
+            namespaced: False
         qa:
             config_file: orgs/managed.json
+            namespaced: False
         release:
             config_file: orgs/managed.json
+            namespaced: False
