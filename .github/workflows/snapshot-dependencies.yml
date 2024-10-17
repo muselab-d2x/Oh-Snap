@@ -6,7 +6,6 @@ on:
         branches:
             - feature/initial-schema
             - main
-
 jobs:
     snapshot-dependencies:
         name: "Snapshot dependencies"
