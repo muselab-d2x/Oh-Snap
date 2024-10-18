@@ -2,11 +2,11 @@ name: >
     Unmanaged Feature Test With PR Snapshot Creation
 on:
     workflow_dispatch:
-    workflow_run:
-        workflows:
-            - Build Feature Test Package
-        types:
-            - completed
+    push:
+        branches:
+            - feature/**
+            - main
+
 jobs:
     feature-test:
         name: "Feature Test"
