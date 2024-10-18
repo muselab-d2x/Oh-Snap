@@ -10,12 +10,13 @@ on:
 
     workflow_run:
         workflows:
-            - Build Feature Test Package
+            - Build 2GP Feature Test Package
         types:
             - completed
 jobs:
     feature-test:
         name: "Feature Test and Snapshot"
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         uses: muselab-d2x/d2x/.github/workflows/feature-test-2gp-snapshot.yml@cumulusci-next-snapshots
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
@@ -26,4 +27,4 @@ jobs:
             create_pr_snapshot: true
             create_failure_snapshot: true
             create_snapshot_commit_status: true
-            triggering_workflow_conclusion: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion || 'success' }}
+            triggering_workflow_conclusion: ${{ github.event.workflow_run.conclusion }}

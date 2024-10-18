@@ -10,10 +10,11 @@ on:
 jobs:
     feature-test:
         name: "Feature Test"
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         uses: muselab-d2x/d2x/.github/workflows/feature-test-2gp.yml@cumulusci-next-snapshots
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
             gh-email: "${{ secrets.GH_EMAIL }}"
             github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
         with:
-            triggering_workflow_conclusion: ${{ github.event.workflow_run.conclusion }}
+            triggering_workflow_conclusion: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion || 'success' }}
