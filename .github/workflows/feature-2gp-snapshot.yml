@@ -1,0 +1,29 @@
+name: >
+    2GP Feature Test an PR Snapshots
+on:
+    workflow_dispatch:
+        inputs:
+            debug:
+                description: "Enable cci's debug mode for more verbose output"
+                required: false
+                default: "false"
+
+    workflow_run:
+        workflows:
+            - Build Feature Test Package
+        types:
+            - completed
+jobs:
+    feature-test:
+        name: "Feature Test and Snapshot"
+        uses: muselab-d2x/d2x/.github/workflows/feature-test-2gp-snapshot.yml@cumulusci-next-snapshots
+        secrets:
+            dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
+            gh-email: "${{ secrets.GH_EMAIL }}"
+            github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
+        with:
+            debug: ${{ github.event.inputs.debug }}
+            create_pr_snapshot: true
+            create_failure_snapshot: true
+            create_snapshot_commit_status: true
+            triggering_workflow_conclusion: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion || 'success' }}
