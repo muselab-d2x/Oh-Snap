@@ -16,5 +16,3 @@ jobs:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
             gh-email: "${{ secrets.GH_EMAIL }}"
             github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
-        with:
-            triggering_workflow_conclusion: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion || 'success' }}

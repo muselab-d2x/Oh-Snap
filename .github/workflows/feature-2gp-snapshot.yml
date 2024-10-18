@@ -27,4 +27,3 @@ jobs:
             create_pr_snapshot: true
             create_failure_snapshot: true
             create_snapshot_commit_status: true
-            triggering_workflow_conclusion: ${{ github.event.workflow_run.conclusion }}
