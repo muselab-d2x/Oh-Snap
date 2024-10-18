@@ -2,10 +2,11 @@ name: >
     Unmanaged Feature Test Using Predicted Snapshots
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - feature/**
-            - main
+    workflow_run:
+        workflows:
+            - Build Feature Test Package
+        types:
+            - completed
 jobs:
     feature-test:
         name: "Feature Test"

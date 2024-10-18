@@ -2,10 +2,11 @@ name: >
     2GP Feature Test with Predicted Snapshots
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - feature/**
-            - main
+    workflow_run:
+        workflows:
+            - Build Feature Test Package
+        types:
+            - completed
 jobs:
     feature-test:
         name: "Feature Test"
@@ -14,3 +15,5 @@ jobs:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
             gh-email: "${{ secrets.GH_EMAIL }}"
             github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
+        with:
+            triggering_workflow_conclusion: ${{ github.event.workflow_run.conclusion }}
