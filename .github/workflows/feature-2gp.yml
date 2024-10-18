@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
     workflow_run:
         workflows:
-            - Build Feature Test Package
+            - Build 2GP Feature Test Package
         types:
             - completed
 jobs:
