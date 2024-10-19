@@ -6,11 +6,6 @@ on:
             environment_name:
                 description: "If set, the scratch org will be kept and stored as a GitHub Environment with this name. Must be a unique environment name."
                 required: false
-            debug:
-                description: "Enable cci's debug mode for more verbose output"
-                type: boolean
-                required: false
-                default: false
     workflow_run:
         workflows:
             - Build 2GP Feature Test Package
@@ -22,7 +17,6 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         uses: muselab-d2x/d2x/.github/workflows/feature-test-2gp.yml@cumulusci-next-snapshots
         with:
-            debug: ${{ github.event.inputs.debug || false }}
             environment_name: ${{ github.event.inputs.environment_name || '' }}
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
