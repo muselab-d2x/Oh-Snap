@@ -22,7 +22,7 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         uses: muselab-d2x/d2x/.github/workflows/feature-test-2gp.yml@cumulusci-next-snapshots
         with:
-            debug: ${{ github.event.inputs.debug }}
+            debug: ${{ github.event.inputs.debug || false }}
             environment_name: ${{ github.event.inputs.environment_name || '' }}
         secrets:
             dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
