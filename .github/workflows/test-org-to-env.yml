@@ -16,3 +16,4 @@ jobs:
         with:
             org_alias: target
             environment_name: MuselabPBO
+            update_environment: true
