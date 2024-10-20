@@ -2,10 +2,6 @@ name: >
     Snapshot the dependencies flow results
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - feature/initial-schema
-            - main
 jobs:
     snapshot-dependencies:
         name: "Snapshot dependencies"
