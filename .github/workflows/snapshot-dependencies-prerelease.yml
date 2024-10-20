@@ -1,0 +1,24 @@
+name: >
+    Snapshot the 2gp dependnencies flow results
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - feature/initial-schema
+            - main
+jobs:
+    snapshot-dependencies:
+        name: "Snapshot dependencies"
+        uses: muselab-d2x/d2x/.github/workflows/snapshot-flow.yml@cumulusci-next-snapshots
+        secrets:
+            dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
+            gh-email: "${{ secrets.GH_EMAIL }}"
+            github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
+            github-app-id: "${{ secrets.CCI_GITHUB_APP_ID }}"
+            github-app-key: "${{ secrets.CCI_GITHUB_APP_KEY }}"
+        with:
+            org_name: feature
+            flow_name: install_2gp_commit
+            flow_run_options: --skip-from install_managed 
+            create_snapshot_commit_status: true
+            create_snapshot_environment: true
