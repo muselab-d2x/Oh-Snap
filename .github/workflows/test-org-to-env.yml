@@ -1,0 +1,18 @@
+on:
+    push:
+        branches:
+            - feature/**
+            - main
+jobs:
+    save-org-to-env:
+        name: "Save Org to Environment"
+        uses: muselab-d2x/d2x/.github/workflows/org-to-env.yml@cumulusci-next-snapshots
+        secrets:
+            dev-hub-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
+            target-org-auth-url: "${{ secrets.DEV_HUB_AUTH_URL }}"
+            github-token: "${{ secrets.CCI_GITHUB_TOKEN }}"
+            github-app-id: "${{ secrets.CCI_GITHUB_APP_ID }}"
+            github-app-key: "${{ secrets.CCI_GITHUB_APP_KEY }}"
+        with:
+            org_alias: target
+            environment_name: MuselabPBO
