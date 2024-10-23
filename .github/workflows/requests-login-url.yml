@@ -16,9 +16,10 @@ jobs:
         environment: ${{ inputs.org }}
         steps:
             - name: Check SFDX_AUTH_URL for Environment
-              run: echo "SFDX_AUTH_URL: $SFDX_AUTH_URL"
+              run: |
+                  echo "SFDX_AUTH_URL: $SFDX_AUTH_URL"
               env:
-                    SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+                  SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
     send-login-url:
         uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@cumulusci-next-snapshots
         with:
