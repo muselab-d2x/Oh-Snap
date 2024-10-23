@@ -1,0 +1,20 @@
+name: Get Slack DM With Org Login URL
+on:
+    workflow_dispatch:
+        inputs:
+            org:
+                description: "The name of the org to get the login URL for. NOTE: Do not select orgs staring with `Snapshot:`"
+                required: true
+                type: environment
+            slack_username:
+                description: "The Slack username to send the DM to"
+                required: true
+                type: string
+jobs:
+    send-login-url:
+        uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@cumulusci-next-snapshots
+        with:
+            slack_username: ${{ github.event.inputs.slack_username }}
+            environment: ${{ github.event.inputs.org }}
+        secrets:
+            slack-bot-token: "${{ secrets.SLACK_BOT_TOKEN }}"
