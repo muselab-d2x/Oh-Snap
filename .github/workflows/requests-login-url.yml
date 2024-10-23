@@ -29,4 +29,5 @@ jobs:
             environment: ${{ github.event.inputs.org }}
         secrets:
             github-token: ${{ secrets.GITHUB_TOKEN }}
+            sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
             slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
