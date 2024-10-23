@@ -18,3 +18,4 @@ jobs:
             environment: ${{ github.event.inputs.org }}
         secrets:
             github-token: ${{ secrets.GITHUB_TOKEN }}
+            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
