@@ -26,7 +26,6 @@ jobs:
         uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@cumulusci-next-snapshots
         with:
             slack_username: ${{ github.event.inputs.slack_username }}
-            environment: ${{ github.event.inputs.org }}
         secrets:
             github-token: ${{ secrets.GITHUB_TOKEN }}
             sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
