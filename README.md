@@ -1,6 +1,9 @@
 # Oh Snap
 Enter a description for your project
 
+![MuseLab D2X Logo](https://github.com/user-attachments/assets/0146c305-ffd6-4651-a25f-910f6fd68e1c)
+
+
 # Project Setup
 This project is preconfigured with D2X for a comprehensive Development-to-Delivery Experience including CI/CD using GitHub Actions and development environments using GitHub Codespaces.
 
