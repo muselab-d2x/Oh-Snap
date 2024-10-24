@@ -23,6 +23,7 @@ jobs:
               env:
                   SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
     send-login-url:
+        needs: check-auth-url
         uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@cumulusci-next-snapshots
         with:
             environment: ${{ inputs.org }}
