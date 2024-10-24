@@ -44,7 +44,7 @@ jobs:
                   SFDX_AUTH_URL: ${{ secrets.sfdx-auth-url }}
               run: |
                   echo "${SFDX_AUTH_URL} | sf org login sfdx-url --sfdx-url-stdin"
-                  sf org open -r --json | jq -r '.result.url'
+                  sf org open -r --json
 
     send-login-url:
         needs: check-auth-url
