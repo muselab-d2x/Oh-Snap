@@ -20,8 +20,11 @@ jobs:
                   echo "SFDX_AUTH_URL: ${SFDX_AUTH_URL}"
                   echo "${SFDX_AUTH_URL}" > auth_url.txt
                   echo "Length: `wc -c auth_url.txt`"
+                  grep "^force://.*$" auth_url.txt
+                  grep "PlatformCLI" auth_url.txt
               env:
                   SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+
     send-login-url:
         needs: check-auth-url
         uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@cumulusci-next-snapshots
