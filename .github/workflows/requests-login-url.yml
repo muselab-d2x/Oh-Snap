@@ -1,4 +1,4 @@
-name: Get Slack DM With Org Login URL
+name: Request Org Login Url to Slack DM
 on:
     workflow_dispatch:
         inputs:
@@ -52,4 +52,6 @@ jobs:
         with:
             environment: ${{ inputs.org }}
             slack_username: ${{ github.event.inputs.slack_username }}
-        secrets: inherit
+        secrets:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
