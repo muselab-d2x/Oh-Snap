@@ -43,8 +43,8 @@ jobs:
               env:
                   SFDX_AUTH_URL: ${{ secrets.sfdx-auth-url }}
               run: |
-                  echo "${SFDX_AUTH_URL} | sf org login sfdx-url --sfdx-url-stdin"
-                  sf org open -r --json
+                  echo "${SFDX_AUTH_URL} | sf org login sfdx-url --sfdx-url-stdin -a ${{ inputs.org }}"
+                  sf org open -o ${{ inputs.org }} -r --json
 
     send-login-url:
         needs: check-auth-url
