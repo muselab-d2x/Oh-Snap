@@ -32,7 +32,7 @@ jobs:
             options: --user root
             credentials:
                 username: ${{ github.actor }}
-                password: ${{ secrets.github-token }}
+                password: ${{ secrets.GITHUB_TOKEN }}
 
         steps:
             - name: Checkout code
