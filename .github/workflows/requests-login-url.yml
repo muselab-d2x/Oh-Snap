@@ -17,10 +17,10 @@ jobs:
         steps:
             - name: Check SFDX_AUTH_URL for Environment
               run: |
-                  python -c "import os; print('force' in os.environ['SFDX_AUTH_URL'])"
-                  python -c "print('tasks:' in open('cumulusci.yml','r').read())"
                   echo "SFDX_AUTH_URL: ${SFDX_AUTH_URL}"
                   echo "${SFDX_AUTH_URL}" > auth_url.txt
+                  python -c "import os; print('force' in os.environ['SFDX_AUTH_URL'])"
+                  python -c "print('tasks:' in open('auth_url.txt','r').read())"
                   echo "Length: `wc -c auth_url.txt`"
                   grep "force:" auth_url.txt
                   grep "PlatformCLI" auth_url.txt
@@ -39,17 +39,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            - name: Check SFDX_AUTH_URL for Environment
-              run: |
-                  echo "SFDX_AUTH_URL: ${SFDX_AUTH_URL}"
-                  echo "${SFDX_AUTH_URL}" > auth_url.txt
-                  python -c "import os; print('force' in os.environ['SFDX_AUTH_URL'])"
-                  python -c "print('tasks:' in open('auth_url.txt','r').read())"
-                  echo "Length: `wc -c auth_url.txt`"
-                  grep "^force://.*$" auth_url.txt
-                  grep "PlatformCLI" auth_url.txt
-              env:
-                  SFDX_AUTH_URL: ${{ secrets.sfdx-auth-url }}
             - name: Generate Login URL for ${{ inputs.org }}
               env:
                   SFDX_AUTH_URL: ${{ secrets.sfdx-auth-url }}
