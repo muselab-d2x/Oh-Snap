@@ -1,8 +1,17 @@
-# Oh Snap
-Enter a description for your project
-
+# Oh Snap!
 ![MuseLab D2X Logo](https://github.com/user-attachments/assets/0146c305-ffd6-4651-a25f-910f6fd68e1c)
 
+This project is a demonstration of the potential to deeply integrate Salesforce DevOps into GitHub, eliminating the need for any external platform, taking full advantage of GitHub scalability and security, and opening the door to the [Composable Delivery Model](https://muselab.com/bench-notes/introducing-the-composable-delivery-model).
+
+This repository was created using Muselab's [D2X Launchpad](https://launchpad.muselab.com) and has been heavily edited since. 
+
+The entire workflow being developed will soon be available for launch via D2X Launchpad. Modular, composable Salesforce development aligned with D2X's values of **Easy, Efficient, and Extensible**!
+
+More background on the technical challenges we're tackling here:
+* [Develop, Test, and Fix Faster with Scratch Org Snapshots](https://muselab.com/bench-notes/develop-test-and-fix-faster-with-scratch-org-snapshots)
+* [Securing Salesforce DevOps: Least Privilege Access Control](https://muselab.com/bench-notes/securing-salesforce-devops-least-privilege-access-control)
+* [5 Critical Security Questions to Ask Your SI Partner](https://muselab.com/bench-notes/5-critical-security-questions-to-ask-your-si-partner)
+* [Securing Salesforce DevOps: Multi-Job Workflows in GitHub Actions](https://muselab.com/bench-notes/securing-salesforce-devops-multi-job-workflows-in-github-actions)
 
 # Project Setup
 This project is preconfigured with D2X for a comprehensive Development-to-Delivery Experience including CI/CD using GitHub Actions and development environments using GitHub Codespaces.
