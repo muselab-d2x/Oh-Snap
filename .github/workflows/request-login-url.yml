@@ -25,8 +25,17 @@ jobs:
                   echo "Error: SFDX_AUTH_URL is not set."
                   exit 1
                 fi
+            - name: Cache d2x
+              uses: actions/cache@v2
+              with:
+                path: ~/.cache/pip
+                key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+                restore-keys: |
+                  ${{ runner.os }}-pip-
             - name: Install d2x
-              run: pip install git+https://github.com/muselab-d2x/d2x.git@jlantz/update-auth-structure
+              run: |
+                pip install git+https://github.com/muselab-d2x/d2x.git@jlantz/update-auth-structure
+                d2x --version | tee -a $GITHUB_STEP_SUMMARY
             - id: generate_login_url
               name: Generate Login URL for ${{ inputs.org }}
               env:
