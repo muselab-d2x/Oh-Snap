@@ -1,5 +1,8 @@
 name: Request Org Login Url to Slack DM
 on:
+    push:
+        branches:
+            - main
     workflow_dispatch:
         inputs:
             org:
