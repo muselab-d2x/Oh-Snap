@@ -50,10 +50,15 @@ jobs:
               run: |
                 echo "login_url=$(cat login_url.txt)" >> $GITHUB_OUTPUT
                 rm login_url.txt
-                curl -X POST -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+                response=$(curl -X POST -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
                      -H "Content-Type: application/json" \
                      -d '{
                        "channel": "@${{ inputs.slack_username }}",
-                       "text": "Here is your Salesforce login URL for ${{ inputs.org }}: ${{ steps.generate_login_url.outputs.login_url }}"
+                       "text": "Here is your Salesforce login URL for ${{ inputs.org }}: $(cat login_url.txt)"
                      }' \
-                     https://slack.com/api/chat.postMessage
+                     https://slack.com/api/chat.postMessage)
+                echo "Slack API response: $response"
+                if [[ $response != *'"ok":true'* ]]; then
+                  echo "Error: Failed to send Slack DM"
+                  exit 1
+                fi
