@@ -26,3 +26,6 @@ You can check the status of your setup by monitoring the status of the following
 * [![2GP Feature Test](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/feature.yml/badge.svg)](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/feature.yml)
 * [![Beta Test](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/beta.yml/badge.svg)](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/beta.yml)
 * [![Production Release](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/release.yml/badge.svg)](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/release.yml)
+
+# Important Note
+The `request-login-url.yml` workflow requires the `SFDX_AUTH_URL` environment variable to be set. Ensure that this variable is correctly configured in your GitHub repository secrets to avoid any issues during the login URL generation process.
