@@ -11,44 +11,8 @@ on:
                 required: true
                 type: string
 jobs:
-    check-auth-url:
-        runs-on: ubuntu-latest
-        environment: ${{ inputs.org }}
-        steps:
-            - name: Check SFDX_AUTH_URL for Environment
-              run: |
-                  echo "SFDX_AUTH_URL: ${SFDX_AUTH_URL}"
-                  echo "${SFDX_AUTH_URL}" > auth_url.txt
-                  python -c "import os; print('force' in os.environ['SFDX_AUTH_URL'])"
-                  python -c "print('force://' in open('auth_url.txt','r').read())"
-                  echo "Length: `wc -c auth_url.txt`"
-                  grep "force:" auth_url.txt
-                  grep "PlatformCLI" auth_url.txt
-              env:
-                  SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
-    generate-login-url:
-        runs-on: ubuntu-latest
-        environment: ${{ inputs.org }}
-        container:
-            image: ghcr.io/muselab-d2x/d2x:cumulusci-next-snapshots
-            options: --user root
-            credentials:
-                username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-            - name: Generate Login URL for ${{ inputs.org }}
-              env:
-                  SFDX_AUTH_URL: ${{ secrets.sfdx-auth-url }}
-              run: |
-                  echo "${SFDX_AUTH_URL} | sf org login sfdx-url --sfdx-url-stdin --set-default"
-                  sf org open -r --json
-
     send-login-url:
-        needs: check-auth-url
-        uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@cumulusci-next-snapshots
+        uses: muselab-d2x/d2x/.github/workflows/org-login-slack.yml@jlantz/update-auth-structure
         with:
             environment: ${{ inputs.org }}
             slack_username: ${{ github.event.inputs.slack_username }}
