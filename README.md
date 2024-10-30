@@ -28,4 +28,4 @@ You can check the status of your setup by monitoring the status of the following
 * [![Production Release](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/release.yml/badge.svg)](https://github.com/muselab-d2x/Oh-Snap/actions/workflows/release.yml)
 
 # Important Note
-The `request-login-url.yml` workflow requires the `SFDX_AUTH_URL` environment variable to be set. Ensure that this variable is correctly configured in your GitHub repository secrets to avoid any issues during the login URL generation process.
+The `request-login-url.yml` workflow requires the `SFDX_AUTH_URL` environment variable to be set. Ensure that this variable is correctly configured in your GitHub repository secrets to avoid any issues during the login URL generation process. Additionally, the Slack API token used in the workflow must have the `chat:write:bot` scope to successfully send messages.
