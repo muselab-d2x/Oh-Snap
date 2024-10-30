@@ -24,18 +24,26 @@ jobs:
                   echo "Error: SFDX_AUTH_URL is not set."
                   exit 1
                 fi
-            - name: Generate Login URL for ${{ inputs.org }}
-              run: d2x sf auth login | tail -1 > login_url.txt
+            - name: Install d2x
+              run: pip install git+https://github.com/muselab-d2x/d2x.git@jlantz/update-auth-structure
+            - id: generate_login_url
+              name: Generate Login URL for ${{ inputs.org }}
               env:
                 SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
-            - name: Send Slack DM
               run: |
-                login_url=$(cat login_url.txt)
+                set -eo pipefail
+                d2x sf auth login | tail -1 > login_url.txt
+            - name: Send Slack DM
+              if: success()
+              env:
+                SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+              run: |
+                echo "login_url=$(cat login_url.txt)" >> $GITHUB_OUTPUT
                 rm login_url.txt
-                curl -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+                curl -X POST -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
                      -H "Content-Type: application/json" \
                      -d '{
                        "channel": "@${{ inputs.slack_username }}",
-                       "text": "Here is your Salesforce login URL for ${{ inputs.org }}: $login_url"
+                       "text": "Here is your Salesforce login URL for ${{ inputs.org }}: ${{ steps.generate_login_url.outputs.login_url }}"
                      }' \
                      https://slack.com/api/chat.postMessage
