@@ -54,7 +54,7 @@ jobs:
                      -H "Content-Type: application/json" \
                      -d '{
                        "channel": "@${{ inputs.slack_username || 'jasonlantz' }}",
-                       "text": "Here is your Salesforce login URL for ${{ inputs.org }}: $(cat login_url.txt)"
+                       "text": "Here is your Salesforce login URL for ${{ inputs.org }}: ${cat login_url.txt}"
                      }' \
                      https://slack.com/api/chat.postMessage)
                 rm login_url.txt
