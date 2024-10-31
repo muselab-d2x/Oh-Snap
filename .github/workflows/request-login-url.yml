@@ -1,0 +1,79 @@
+name: Request Org Login Url to Slack DM
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      org:
+        description: "The name of the org to get the login URL for. NOTE: Do not select orgs starting with `Snapshot:`"
+        required: true
+        type: environment
+      slack_username:
+        description: "The Slack username to send the DM to"
+        required: true
+        type: string
+
+jobs:
+  send-login-url:
+    environment: DevHub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check SFDX_AUTH_URL
+        run: |
+          if [ -z "${{ secrets.SFDX_AUTH_URL }}" ]; then
+            echo "Error: SFDX_AUTH_URL is not set."
+            exit 1
+          fi
+
+      - name: Cache d2x
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install d2x
+        run: |
+          pip install git+https://github.com/muselab-d2x/d2x.git@jlantz/update-auth-structure
+          d2x --version | tee -a $GITHUB_STEP_SUMMARY
+
+      - id: generate_login_url
+        name: Generate Login URL for ${{ inputs.org }}
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          set -eo pipefail
+          d2x sf auth login | tail -1 > login_url.txt
+
+      - name: Send Slack DM
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          ORG: ${{ inputs.org }}
+          SLACK_USERNAME: ${{ inputs.slack_username }}
+        run: |
+          set -e
+          login_url=$(cat login_url.txt)
+          echo "login_url=$login_url" >> $GITHUB_OUTPUT
+
+          CHANNEL="@${SLACK_USERNAME}"
+          TEXT="Here is your Salesforce login URL for ${ORG}: ${login_url}"
+
+          # Construct JSON data safely
+          JSON_DATA=$(jq -n \
+            --arg channel "$CHANNEL" \
+            --arg text "$TEXT" \
+            '{channel: $channel, text: $text}')
+
+          response=$(curl -X POST -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+               -H "Content-Type: application/json" \
+               -d "$JSON_DATA" \
+               https://slack.com/api/chat.postMessage)
+          rm login_url.txt
+          echo "Slack API response: $response"
+          if [[ $response != *'"ok":true'* ]]; then
+            echo "Error: Failed to send Slack DM"
+            exit 1
+          fi
