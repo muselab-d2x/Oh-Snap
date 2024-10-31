@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - jlantz/fix-request-login-url
   workflow_dispatch:
     inputs:
       org:
@@ -59,7 +58,7 @@ jobs:
           login_url=$(cat login_url.txt)
           echo "login_url=$login_url" >> $GITHUB_OUTPUT
 
-          CHANNEL="@${SLACK_USERNAME:-'jasonlantz'}"
+          CHANNEL="@${SLACK_USERNAME}"
           TEXT="Here is your Salesforce login URL for ${ORG}: ${login_url}"
 
           # Construct JSON data safely
